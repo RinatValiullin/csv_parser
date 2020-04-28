@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
 class Printer
-  attr_accessor :values
+  attr_accessor :rows
 
   TOP_BORDER = "+-----------------+"
   BOTTOM_BORDER = "+--+----+---------+"
 
-  def initialize(values)
-    @values = values
+  def initialize(rows)
+    @rows = rows
   end
 
   def print
     puts(TOP_BORDER)
 
-    @values.each do |row|
-      longest_column = row.max_by(&:length)
-      longest_column.each_with_index do |value, index|
-        result = row_for_print(row, longest_column, index, value).join("|")
+    rows.each do |row|
+      longest_cell = row.max_by(&:length)
+      longest_cell.each_with_index do |_, index|
+        result = row_for_print(row, index).join("|")
 
         puts("|#{result}|")
       end
@@ -27,14 +27,12 @@ class Printer
 
   private
 
-  def row_for_print(row, longest_column, index, value)
-    row.each_with_object([]) do |column, memo|
-      memo << if column == longest_column
-                value
-              elsif column[index]
-                column[index]
+  def row_for_print(row, index)
+    row.each_with_object([]) do |cell, memo|
+      memo << if cell[index]
+                cell[index]
               else
-                " ".rjust(column.length + 1)
+                " ".rjust(cell[0].length)
               end
     end
   end
