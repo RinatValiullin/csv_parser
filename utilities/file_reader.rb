@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FileReader
   attr_accessor :path
 
@@ -11,15 +13,16 @@ class FileReader
   end
 
   def file
-    begin
-      @file ||= File.open(path)
-    rescue
-      puts "File not exist"
-      exit
-    end
+    @file ||= File.open(path)
+  rescue StandardError => e
+    puts e
+    exit
   end
 
   def read
     file.readlines.map(&:chomp)
+  rescue StandardError => e
+    puts e
+    exit
   end
 end

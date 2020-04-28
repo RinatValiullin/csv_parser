@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class FileData
   attr_accessor :data
 
   def initialize(data)
-    if data.length == 0
+    if data == [""]
       puts("Blank file")
       exit
     end
@@ -11,16 +13,16 @@ class FileData
   end
 
   def types
-    @data_types ||= @data[0].split(";")
+    @types ||= @data[0].split(";")
   end
 
   def values
-    @data_values ||= @data[1..@data.length]
-
-    if @data_values.length == 0
+    if @data[1..@data.length].empty?
       puts "There are no data for print"
       exit
     end
+
+    @values ||= @data[1..@data.length]
   end
 
   def values_sorted_by_type

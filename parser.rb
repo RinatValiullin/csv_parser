@@ -1,4 +1,6 @@
-Dir["./decorators/rows_decorator.rb", "./utilities/*.rb"].each {|file| require file }
+# frozen_string_literal: true
+
+Dir["./decorators/rows_decorator.rb", "./utilities/*.rb"].sort.each { |file| require file }
 
 file_reader = FileReader.new(ARGV[0])
 

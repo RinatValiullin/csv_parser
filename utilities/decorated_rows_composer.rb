@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DecoratedRowsComposer
   attr_accessor :rows, :composed_rows, :values_count
 

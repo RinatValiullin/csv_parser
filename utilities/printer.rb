@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Printer
   attr_accessor :values
 
@@ -27,13 +29,13 @@ class Printer
 
   def row_for_print(row, longest_column, index, value)
     row.each_with_object([]) do |column, memo|
-      if column == longest_column
-        memo << value
-      elsif column[index]
-        memo << column[index]
-      else
-        memo << " ".rjust(column.length+1)
-      end
+      memo << if column == longest_column
+                value
+              elsif column[index]
+                column[index]
+              else
+                " ".rjust(column.length + 1)
+              end
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "./decorators/base_decorator.rb"
 
 class IntDecorator < BaseDecorator
