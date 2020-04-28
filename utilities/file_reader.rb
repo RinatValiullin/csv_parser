@@ -18,4 +18,8 @@ class FileReader
       exit
     end
   end
+
+  def read
+    file.readlines.map(&:chomp)
+  end
 end

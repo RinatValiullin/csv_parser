@@ -5,7 +5,7 @@ Dir[
   "./decorators/string_decorator.rb",
 ].each {|file| require file }
 
-class RowDecorator < BaseDecorator
+class RowsDecorator < BaseDecorator
   TYPES = {
     "int" => IntDecorator,
     "string" => StringDecorator,
@@ -15,6 +15,7 @@ class RowDecorator < BaseDecorator
   def decorate(data_types)
     @values.each_with_index do |value, index|
       type = data_types[index]
+
       @values[index] = TYPES[type].new(value).decorate
     end
   end

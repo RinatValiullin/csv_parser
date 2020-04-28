@@ -2,6 +2,11 @@ class FileData
   attr_accessor :data
 
   def initialize(data)
+    if data.length == 0
+      puts("Blank file")
+      exit
+    end
+
     @data = data
   end
 
@@ -11,6 +16,11 @@ class FileData
 
   def values
     @data_values ||= @data[1..@data.length]
+
+    if @data_values.length == 0
+      puts "There are no data for print"
+      exit
+    end
   end
 
   def values_sorted_by_type
