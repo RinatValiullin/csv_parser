@@ -5,9 +5,14 @@ require "./decorators/base_decorator.rb"
 class MoneyDecorator < BaseDecorator
   def decorate
     @values.map do |value|
-      integer_part, fractional_part = value.split(".")
-
-      [integer_part.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1 ').reverse + "," + fractional_part.chars.last(2).join]
+      rounded = value.to_f.ceil(2)
+      [split_digest(rounded)]
     end
+  end
+
+  private
+
+  def split_digest(value)
+    value.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1 ').reverse
   end
 end

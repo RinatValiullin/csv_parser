@@ -12,8 +12,8 @@ class DecoratedRowsComposer
   def compose
     values_count.times do |index|
       rows.each do |values|
-        @composed_rows[index] ||= []
-        @composed_rows[index] << values[index]
+        composed_rows[index] ||= []
+        composed_rows[index] << values[index]
       end
     end
   end

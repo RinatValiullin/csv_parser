@@ -4,25 +4,23 @@ class FileReader
   attr_accessor :path
 
   def initialize(path)
-    unless path
-      puts "Please, enter path to the file"
-      exit
-    end
+    raise "Please, enter path to the file" unless path
+    raise "File is empty" if file_empty?(path)
 
     @path = path
   end
 
-  def file
-    @file ||= File.open(path)
-  rescue StandardError => e
-    puts e
-    exit
-  end
-
   def read
     file.readlines.map(&:chomp)
-  rescue StandardError => e
-    puts e
-    exit
+  end
+
+  private
+
+  def file_empty?(path)
+    !(File.file?(path) && !File.zero?(path))
+  end
+
+  def file
+    @file ||= File.open(path)
   end
 end

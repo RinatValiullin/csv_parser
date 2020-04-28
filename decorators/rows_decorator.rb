@@ -1,24 +1,39 @@
 # frozen_string_literal: true
 
 Dir[
-  "./decorators/base_decorator.rb",
   "./decorators/int_decorator.rb",
   "./decorators/money_decorator.rb",
   "./decorators/string_decorator.rb",
 ].sort.each { |file| require file }
 
-class RowsDecorator < BaseDecorator
+class RowsDecorator
+  attr_reader :columns
+
   TYPES = {
     "int" => IntDecorator,
     "string" => StringDecorator,
     "money" => MoneyDecorator
   }.freeze
 
-  def decorate(data_types)
-    @values.each_with_index do |value, index|
-      type = data_types[index]
+  def initialize(columns)
+    @columns = columns
+  end
 
-      @values[index] = TYPES[type].new(value).decorate
+  def decorate(types)
+    validate_types(types)
+
+    columns.each_with_index.map do |column, index|
+      type = types[index]
+
+      TYPES[type].new(column).decorate
+    end
+  end
+
+  private
+
+  def validate_types(types)
+    types.each do |type|
+      raise "Invalid data type in file" unless TYPES.keys.include?(type)
     end
   end
 end

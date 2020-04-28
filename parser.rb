@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 
-Dir["./decorators/rows_decorator.rb", "./utilities/*.rb"].sort.each { |file| require file }
+begin
+  Dir["./decorators/rows_decorator.rb", "./utilities/*.rb"].sort.each { |file| require file }
 
-file_reader = FileReader.new(ARGV[0])
+  file_reader = FileReader.new(ARGV[0])
 
-file_data = FileData.new(file_reader.read)
+  file_data = FileData.new(file_reader.read)
 
-data_values_sorted_by_type = file_data.values_sorted_by_type
+  values_by_columns = file_data.values_by_columns
 
-decorated_rows = RowsDecorator.new(data_values_sorted_by_type).decorate(file_data.types)
+  decorated_rows = RowsDecorator.new(values_by_columns).decorate(file_data.types)
 
-decorated_rows_composer = DecoratedRowsComposer.new(decorated_rows, file_data.values.length)
-decorated_rows_composer.compose
+  decorated_rows_composer = DecoratedRowsComposer.new(decorated_rows, file_data.data.length)
+  decorated_rows_composer.compose
 
-Printer.new(decorated_rows_composer.composed_rows).print
+  Printer.new(decorated_rows_composer.composed_rows).print
+rescue StandardError => e
+  puts(e)
+end
