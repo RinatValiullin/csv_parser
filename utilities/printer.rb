@@ -29,11 +29,7 @@ class Printer
 
   def row_for_print(row, index)
     row.each_with_object([]) do |cell, memo|
-      memo << if cell[index]
-                cell[index]
-              else
-                " ".rjust(cell[0].length)
-              end
+      memo << (cell[index] || " ".rjust(cell[0].length))
     end
   end
 end

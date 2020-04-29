@@ -6,7 +6,7 @@ class MoneyDecorator < BaseDecorator
   def decorate
     @values.map do |value|
       rounded = value.to_f.ceil(2)
-      [split_digest(sprintf("%.2f", rounded))]
+      [split_digest(format("%.2f", rounded))]
     end
   end
 

@@ -21,7 +21,7 @@ class RowsDecorator
 
   def decorate(types)
     validate_types(types)
-
+    p(columns)
     columns.each_with_index.map do |column, index|
       type = types[index]
 
