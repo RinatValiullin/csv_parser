@@ -4,14 +4,19 @@ require "./decorators/base_decorator.rb"
 
 class StringDecorator < BaseDecorator
   def decorate
-    @values.map do |value|
+    values.map do |value|
       cells = value.split(" ")
-      max_length_cell = cells.max_by(&:length).length
-      cells.map do |cell|
-        cell_lenght = cell.length
-        difference_between_cells_length = max_length_cell - cell_lenght
-        cell.ljust(cell.length + difference_between_cells_length, " ")
-      end
+
+      cells.map { |cell| cell.ljust(max_length) }
     end
+  end
+
+  private
+
+  def max_length
+    @max_length ||= values.map { |value| value.split(" ") }
+                          .flatten
+                          .max_by(&:length)
+                          .length
   end
 end

@@ -3,15 +3,12 @@
 class Printer
   attr_accessor :rows
 
-  TOP_BORDER = "+-----------------+"
-  BOTTOM_BORDER = "+--+----+---------+"
-
   def initialize(rows)
     @rows = rows
   end
 
   def print
-    puts(TOP_BORDER)
+    print_top_border
 
     rows.each do |row|
       longest_cell = row.max_by(&:length)
@@ -20,8 +17,7 @@ class Printer
 
         puts("|#{result}|")
       end
-
-      puts(BOTTOM_BORDER)
+      print_bottom_border(row)
     end
   end
 
@@ -31,5 +27,28 @@ class Printer
     row.each_with_object([]) do |cell, memo|
       memo << (cell[index] || " ".rjust(cell[0].length))
     end
+  end
+
+  def print_top_border
+    puts("+#{'-' * longest_row.length}+")
+  end
+
+  def print_bottom_border(row)
+    bottom_border = longest_values_in_row(row).each_with_object(["+"]) do |value, memo|
+      memo << ("-" * value.length)
+      memo << "+"
+    end
+
+    puts(bottom_border.join(""))
+  end
+
+  def longest_row
+    rows.map do |row|
+      longest_values_in_row(row).join("|")
+    end.max_by(&:length)
+  end
+
+  def longest_values_in_row(row)
+    row.map { |column| column.max_by(&:length) }
   end
 end
