@@ -6,7 +6,7 @@ Dir[
   "./decorators/string_decorator.rb",
 ].sort.each { |file| require file }
 
-class RowsDecorator
+class ColumnsDecorator
   attr_reader :columns
 
   TYPES = {
